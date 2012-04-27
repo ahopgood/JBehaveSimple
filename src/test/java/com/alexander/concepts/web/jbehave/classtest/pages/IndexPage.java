@@ -1,13 +1,11 @@
 package com.alexander.concepts.web.jbehave.classtest.pages;
 
+import static org.junit.Assert.assertEquals;
+
 import org.jbehave.web.selenium.SeleniumPage;
-import org.jbehave.web.selenium.WebDriverPage;
-import org.jbehave.web.selenium.WebDriverProvider;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.condition.ConditionRunner;
-
-import static org.junit.Assert.*;
 
 public class IndexPage extends SeleniumPage { 
 	//extends WebDriverPage {
@@ -31,7 +29,7 @@ public class IndexPage extends SeleniumPage {
 	
 	public void verifyPage(){
 		this.textIsVisible("Sample Web Application");
-		assertEquals("Sample Web Application", this.getTitle());
+		assertEquals("Sample Web Application", this.selenium.getTitle());
 	}
 
 }

@@ -11,6 +11,7 @@ import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
+import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.SilentStepMonitor;
@@ -53,6 +54,14 @@ public class WebPageStories extends JUnitStories {
                 new IndexPageSteps(pages),
                 lifecycleSteps,
                 new SeleniumScreenshotOnFailure(selenium));
+    }
+    
+    @Override
+    public List<CandidateSteps> candidateSteps() {
+        return new InstanceStepsFactory(configuration(),
+                new IndexPageSteps(pages),
+                lifecycleSteps,
+                new SeleniumScreenshotOnFailure(selenium)).createCandidateSteps();
     }
     
 	@Override
