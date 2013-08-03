@@ -15,4 +15,30 @@ public class RttiObject implements Serializable {
 		 this.status 	= status;
 		 this.legs 		= legs;
 	}
+
+	public String getRoute() {
+		return route;
+	}
+
+	public void setRoute(String route) {
+		this.route = route;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public ArrayList<RttiLeg> getLegs() {
+		return legs;
+	}
+
+	public void setLegs(ArrayList<RttiLeg> legs) {
+		this.legs = legs;
+	}
+	
+	
 }

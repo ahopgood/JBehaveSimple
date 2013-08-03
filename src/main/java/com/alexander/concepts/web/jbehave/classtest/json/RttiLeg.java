@@ -2,9 +2,9 @@ package com.alexander.concepts.web.jbehave.classtest.json;
 
 import java.io.Serializable;
 
-public class RttiLeg implements Serializable {
+public class RttiLeg { //implements Serializable {
 
-	private static final long serialVersionUID = -8922145152981999636L;
+//	private static final long serialVersionUID = -8922145152981999636L;
 	private String arrival;
 	private String departure;
 	

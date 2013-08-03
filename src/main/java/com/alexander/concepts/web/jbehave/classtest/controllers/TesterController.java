@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,10 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alexander.concepts.web.jbehave.classtest.json.RttiLeg;
 import com.alexander.concepts.web.jbehave.classtest.json.RttiObject;
 import com.alexander.concepts.web.jbehave.classtest.json.TestObject;
+import com.alexander.concepts.web.jbehave.classtest.model.RttiDao;
 
 @RequestMapping("/testers/*")
 @Controller
 public class TesterController {
+	
+	private RttiDao rttiDao;
 	
 	@RequestMapping("/getRttiFileList")
 	public String[] getRttiFileList(){
@@ -54,11 +58,10 @@ public class TesterController {
 	}
 	
 	@RequestMapping(value="/json", method=RequestMethod.GET)
-	public @ResponseBody TestObject readJson(){
-//		ArrayList<RttiLeg> legs = new ArrayList<RttiLeg>();
-//		legs.add(new RttiLeg("0","0"));
-//		return new RttiObject("Man-Eus","ONTIME",legs);
-		return new TestObject("test Object");
+	public @ResponseBody List<RttiObject> readJson(){
+		return rttiDao.getRttiList();
+//		return new TestObject("test Object");
+//		return legs;
 	}
 	
 	@RequestMapping(value="/json", method=RequestMethod.POST)
@@ -66,5 +69,10 @@ public class TesterController {
 		System.out.println("In readJson post");
 		System.out.println(string);
 		return new TestObject(string);
+	}
+
+	@Required
+	public void setRttiDao(RttiDao rttiDao) {
+		this.rttiDao = rttiDao;
 	}
 }

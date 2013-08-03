@@ -40,7 +40,7 @@
 									console.log("Success");
 								}, 
 								error: function(xhr) { 
-									console.log("Failure");
+									console.log("Failure", xhr);
 								}
 							});
 					return false;
@@ -78,14 +78,34 @@
 				
 				$("a.jsonLink").click(function(){
 					var link = $(this);
-					$.ajax({ url: link.attr("href"), dataType: "text", contentType: "application/json", success: function(text) { console.log("Success "+text); }, error: function(xhr) { console.log("Failure"); }});
+					$.ajax({ 	url: link.attr("href"), 
+								dataType: "text", 
+								contentType: "application/json", 
+								success: function(text) { 
+									console.log("Success "+text); 
+								}, 
+								error: function(xhr) { 
+									console.log("Failure",xhr); 
+								}
+							});
 					return false;
 				});
 				
 				$("form.jsonForm").submit(function(event) {
 					var form = $(this);
 					var button = form.children(":first");
-					$.ajax({ type: "POST", url: form.attr("action"), data: "foo", contentType: "text/plain", dataType: "text", success: function(text) { console.log("Success "+text); }, error: function(xhr) { console.log("Failure"); }});
+					$.ajax({ 	type: "POST", 
+								url: form.attr("action"), 
+								data: "foo", 
+								contentType: "text/plain", 
+								dataType: "text", 
+								success: function(text) { 
+									console.log("Success "+text); 
+								}, 
+								error: function(xhr) { 
+									console.log("Failure",xhr); 
+								}
+							});
 					return false;
 				});
 			});
@@ -100,11 +120,11 @@
 
 			<a id="writeString" class="textLink" href="<c:url value="/test/testers/writestring" />">Write a String</a>
 			</br>
-			<a id="jsonString" class="jsonLink" href="<c:url value="/test/testers/json" />">Write json</a>
+			<a id="jsonString" class="jsonLink" href="<c:url value="/test/testers/json" />">Read json</a>
 			</br>
 			
 			<form id="readJsonString" class="jsonForm" action="<c:url value="/test/testers/json" />" method="post">
-				<input id="readStringSubmit" type="submit" value="Read json" />
+				<input id="readStringSubmit" type="submit" value="Write json" />
 			</form> 
 			 
 			<form id="readString" class="textForm" action="<c:url value="/messageconverters/string" />" method="post">

@@ -1,9 +1,12 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" %>
 <html>
 	<head>
 		<title>Page One</title>
+		<script type="text/javascript" src="../../../js/jquery-1.7.2.js"></script>
 		<script type="text/javascript">
 			window.onload = start;
-			
+			var rootContext = "../../..";
 			function start() {
 				var template 	= document.getElementById("rtti_table_body_template");
 				var table 		= document.getElementById("rtti_table");
@@ -28,7 +31,8 @@
 			};
 			
 			function fillInTableRow(template, rttiInfo) {
-				console.log(template);
+				//console.log(template);
+				console.log("In the fillInTableRow with rttiInfo "+rttiInfo);
 				var children 		= template.childNodes;
 				console.log(children);
 				console.log("The number of children is "+children.length);
@@ -41,9 +45,10 @@
 						} else if (i==2) {
 							children.item(i).innerHTML		= rttiInfo.status;
 						} else {
+							console.log("Legs "+rttiInfo.legs);
 							var leg = rttiInfo.legs[i-3];
-							console.log(leg);
-							console.log("Test"+i);
+							//console.log(leg);
+							//console.log("Test"+i);
 							if (leg != undefined){
 	 							children.item(i).innerHTML		= leg.departure + "," +leg.arrival;
 							}
@@ -57,9 +62,11 @@
 			function createObjects(){
 				var objects = new Array();
 				objects[0] = new rttiInfo("MAN-EUS","LATE",new Array(new leg("0","+5")));
+				console.log("rttiInfo object");
+				console.log(objects[0]);
 				return objects;
 			};
-			
+			/*
 			function ajaxGet(parameters,url){
 				var request = new XMLHttpRequest();
 				request.open("GET",url+"?"+parameters,true);
@@ -75,13 +82,34 @@
 						console.log(request);
 					}
 				}
-			};
+			};*/
 			
-			function testget(){
+			function buttonClick() {
 				console.log("Testing");
-				var url = "/tester/getFile";
-				var parameters = "";
-				ajaxGet(url, parameters);
+				
+				$.ajax({ 	type: "GET",
+							url: rootContext+"/test/testers/json", 
+							dataType: "text", 
+							contentType: "application/json", 
+							success: function(text) { 
+								console.log("Success "+text); 
+								var json		= jQuery.parseJSON(text);
+								var template 	= document.getElementById("rtti_table_body_template");
+								var tableBody	= document.getElementById("rtti_table_body");
+								var clone 		= template.cloneNode(true);
+								console.log("Have created a clone node");
+								tableBody.appendChild(fillInTableRow(clone, json[0]));
+								console.log(json);
+								console.log("status "+json[0].status);
+								console.log("route "+json[0].route);
+								console.log("legs "+json[0].legs);
+								console.log("Tried to append child");
+							}, 
+							error: function(xhr) { 
+								console.log("Failure",xhr); 
+							}
+						});
+					return false;
 			};
 		</script>
 	</head>
@@ -119,7 +147,7 @@
 			</table>
 		</div>
 		<div>
-			<input type="button" id="testget" value="GET" onclick="testget()"/>
+			<input id="testget" type="button" value="GET" onclick="buttonClick()"/>
 		</div>
 	</body>
 </html>
